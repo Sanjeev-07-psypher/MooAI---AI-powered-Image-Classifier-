@@ -1,0 +1,261 @@
+[
+    {
+        "name": "Cow - Gir",
+        "origin": "Gir hills, Gujarat",
+        "population": "24 - 26 lakh",
+        "use": "Dairy",
+        "milkYield": "8-12 L/day (1800-2200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Sahiwal",
+        "origin": "Punjab region",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Dairy",
+        "milkYield": "8-15 L/day (2000-2500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Red Sindhi",
+        "origin": "Sindh, Pakistan",
+        "population": "2.5 - 3.5 lakh",
+        "use": "Dairy",
+        "milkYield": "7-11 L/day (1800-2200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Tharparkar",
+        "origin": "Rajasthan, India",
+        "population": "11 - 13 lakh",
+        "use": "Dual (Dairy/Draught)",
+        "milkYield": "6-10 L/day (1600-2000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Rathi",
+        "origin": "Alwar region, Rajasthan",
+        "population": "14 - 16 lakh",
+        "use": "Dairy",
+        "milkYield": "7-12 L/day (1800-2500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Deoni",
+        "origin": "Latur region, Maharashtra",
+        "population": "5.5 - 6.5 lakh",
+        "use": "Dual (Dairy/Draught)",
+        "milkYield": "4-6 L/day (900-1200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kankrej",
+        "origin": "Kutch region, Gujarat",
+        "population": "43 - 47 lakh",
+        "use": "Dual (Draught/Dairy)",
+        "milkYield": "5-8 L/day (1400-1800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Hariana",
+        "origin": "Hisar & Rohtak, Haryana",
+        "population": "48 - 52 lakh",
+        "use": "Dual (Draught/Dairy)",
+        "milkYield": "4-6 L/day (1000-1400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ongole",
+        "origin": "Ongole region, Andhra Pradesh",
+        "population": "68 - 72 lakh",
+        "use": "Dual (Draught/Meat)",
+        "milkYield": "4-7 L/day (1000-1500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Hallikar",
+        "origin": "Mysore region, Karnataka",
+        "population": "27 - 29 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (250-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Amritmahal",
+        "origin": "Hassan region, Karnataka",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Khillari",
+        "origin": "Sholapur region, Maharashtra",
+        "population": "17 - 19 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (250-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kangayam",
+        "origin": "Coimbatore region, Tamil Nadu",
+        "population": "4.5 - 5 lakh",
+        "use": "Draught",
+        "milkYield": "2-4 L/day (500-1000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Nagori",
+        "origin": "Nagaur district, Rajasthan",
+        "population": "8 - 10 lakh",
+        "use": "Draught",
+        "milkYield": "3-5 L/day (600-900 kg/lactation)"
+    },
+    {
+        "name": "Cow - Dangi",
+        "origin": "Dangs district, Gujarat/Maharashtra",
+        "population": "3 - 4 lakh",
+        "use": "Draught (for hilly terrain)",
+        "milkYield": "2-4 L/day (500-800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Bargur",
+        "origin": "Bargur hills, Tamil Nadu",
+        "population": "14,000 - 16,000",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Binjharpuri",
+        "origin": "Jajpur district, Odisha",
+        "population": "6 - 8 lakh",
+        "use": "Draught",
+        "milkYield": "2-3 L/day (600-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ghumusari",
+        "origin": "Kandhamal district, Odisha",
+        "population": "35,000 - 45,000",
+        "use": "Draught, Manure",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kasargod",
+        "origin": "Kasaragod district, Kerala",
+        "population": "4,000 - 6,000",
+        "use": "Dairy, Manure",
+        "milkYield": "1-3 L/day (300-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kenkatha",
+        "origin": "Bundelkhand region, UP/MP",
+        "population": "2.5 - 3.5 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (300-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kherigarh",
+        "origin": "Kheri district, Uttar Pradesh",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Draught",
+        "milkYield": "2-3 L/day (400-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Khariar",
+        "origin": "Nuapada district, Odisha",
+        "population": "1.4 - 1.6 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (300-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Krishna Valley",
+        "origin": "Krishna river valley, Karnataka",
+        "population": "2,000 - 4,000",
+        "use": "Draught",
+        "milkYield": "3-5 L/day (800-1000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Malnad Gidda",
+        "origin": "Malnad region, Karnataka",
+        "population": "11 - 13 lakh",
+        "use": "Dairy, Manure",
+        "milkYield": "2-4 L/day (500-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Motu",
+        "origin": "Malkangiri district, Odisha",
+        "population": "35,000 - 45,000",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Nimari",
+        "origin": "Nimar region, Madhya Pradesh",
+        "population": "7 - 9 lakh",
+        "use": "Draught",
+        "milkYield": "2-4 L/day (500-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Pulikulam",
+        "origin": "Madurai region, Tamil Nadu",
+        "population": "90,000 - 1.1 lakh",
+        "use": "Draught (Jallikattu)",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Toda",
+        "origin": "Nilgiri hills, Tamil Nadu",
+        "population": "1,100 - 1,300",
+        "use": "Manure, Cultural",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Umblachery",
+        "origin": "Cauvery delta, Tamil Nadu",
+        "population": "1.8 - 2.2 lakh",
+        "use": "Draught (for paddy fields)",
+        "milkYield": "1-3 L/day (300-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Alambadi",
+        "origin": "Krishnagiri, Tamil Nadu",
+        "population": "1,500 - 2,500",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Banni",
+        "origin": "Kutch region, Gujarat",
+        "population": "11,000 - 13,000",
+        "use": "Dairy, Draught",
+        "milkYield": "5-8 L/day (1200-1800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Vechur",
+        "origin": "Kottayam, Kerala",
+        "population": "1,400 - 1,600",
+        "use": "Dairy (A2 milk)",
+        "milkYield": "2-3 L/day (500-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Jersey",
+        "origin": "Jersey Island, UK (Exotic)",
+        "population": "7,000 - 9,000",
+        "use": "Dairy (High Fat %)",
+        "milkYield": "18-24 L/day (4000-5000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Brown Swiss",
+        "origin": "Switzerland (Exotic)",
+        "population": "5,000 - 7,000",
+        "use": "Dairy",
+        "milkYield": "22-28 L/day (5000-6000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ayrshire",
+        "origin": "Ayr, Scotland (Exotic)",
+        "population": "2,500 - 3,500",
+        "use": "Dairy",
+        "milkYield": "20-25 L/day (4500-5500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Guernsey",
+        "origin": "Guernsey Island, UK (Exotic)",
+        "population": "Below 1,000",
+        "use": "Dairy (A2 milk)",
+        "milkYield": "18-22 L/day (4000-5000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Red Dane",
+        "origin": "Denmark (Exotic)",
+        "population": "2,000 - 3,000",
+        "use": "Dairy",
+        "milkYield": "20-25 L/day (5000-5500 kg/lactation)"
+    }
+]

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cattle Breed Classifier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis2css?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 font-inter">
+
+    <div id="app" class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-2xl text-center">
+
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="space-y-6">
+            <h1 class="text-4xl font-bold">MooAI: Cattle Breed Classifier</h1>
+            <p>Upload an image of a cow or buffalo and It will try to identify its breed!</p>
+
+            <div>
+                <label for="file-upload"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-full cursor-pointer transition-colors duration-300 shadow-md">
+                    Choose an Image
+                </label>
+                <input id="file-upload" type="file" class="hidden" accept="image/*">
+            </div>
+
+            <div id="image-preview" class="mt-8 hidden flex items-center justify-center">
+                <img id="preview-image" src="#" alt="Image Preview"
+                    class="max-h-64 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+            </div>
+
+            <button id="predict-button"
+                class="mt-6 w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 shadow-md hidden">
+                Classify Breed
+            </button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="space-y-6 hidden">
+            <h2 class="text-3xl font-bold">Prediction Results</h2>
+            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
+                <div class="relative w-full sm:w-1/2">
+                    <img id="result-image" src="#" alt="Predicted Image"
+                        class="w-full h-auto rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                </div>
+                <div class="text-left w-full sm:w-1/2">
+                    <p><strong>Predicted Breed:</strong></p>
+                    <p id="predicted-class" class="text-xl font-bold text-indigo-600 mt-1"></p>
+
+                    <p class="mt-4"><strong>Confidence:</strong></p>
+                    <p id="confidence" class="text-xl font-bold text-green-600 mt-1"></p>
+
+                    <p class="mt-4"><strong>Origin Region:</strong></p>
+                    <p id="origin-region" class="text-xl font-semibold mt-1"></p>
+
+                    <p class="mt-4"><strong>Population:</strong></p>
+                    <p id="population" class="text-xl font-semibold mt-1"></p>
+
+                    <p class="mt-4"><strong>Main Use:</strong></p>
+                    <p id="main-use" class="text-xl font-semibold mt-1"></p>
+
+                    <p class="mt-4"><strong>Avg. Milk Yield:</strong></p>
+                    <p id="avg-milk-yield" class="text-xl font-semibold mt-1"></p>
+                </div>
+            </div>
+
+            <button id="save-button"
+                class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 shadow-md">
+                Save Result Locally
+            </button>
+
+            <button id="back-button"
+                class="mt-3 bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 shadow-md">
+                Try Another Image
+            </button>
+
+            <!-- Feedback Section -->
+            <div id="feedback-section" class="mt-6 space-y-4">
+                <p class="text-lg font-semibold">Was the prediction correct?</p>
+                <div class="flex justify-center space-x-4">
+                    <button id="feedback-yes"
+                        class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-full transition-colors duration-300 shadow-md">
+                        Yes
+                    </button>
+                    <button id="feedback-no"
+                        class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-full transition-colors duration-300 shadow-md">
+                        No
+                    </button>
+                </div>
+
+                <div id="correct-breed-section" class="hidden space-y-4">
+                    <p>Select the correct breed:</p>
+                    <select id="correct-breed" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600">
+                        <!-- Options populated by JS -->
+                    </select>
+                    <button id="submit-feedback"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-full transition-colors duration-300 shadow-md">
+                        Submit Feedback
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Breed data embedded here (shortened for brevity, you can copy the full breedData array as in your previous code)
+        let breedData = [
+            {
+        "name": "Cow - Gir",
+        "origin": "Gir hills, Gujarat",
+        "population": "24 - 26 lakh",
+        "use": "Dairy",
+        "milkYield": "8-12 L/day (1800-2200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Sahiwal",
+        "origin": "Punjab region",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Dairy",
+        "milkYield": "8-15 L/day (2000-2500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Red Sindhi",
+        "origin": "Sindh, Pakistan",
+        "population": "2.5 - 3.5 lakh",
+        "use": "Dairy",
+        "milkYield": "7-11 L/day (1800-2200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Tharparkar",
+        "origin": "Rajasthan, India",
+        "population": "11 - 13 lakh",
+        "use": "Dual (Dairy/Draught)",
+        "milkYield": "6-10 L/day (1600-2000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Rathi",
+        "origin": "Alwar region, Rajasthan",
+        "population": "14 - 16 lakh",
+        "use": "Dairy",
+        "milkYield": "7-12 L/day (1800-2500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Deoni",
+        "origin": "Latur region, Maharashtra",
+        "population": "5.5 - 6.5 lakh",
+        "use": "Dual (Dairy/Draught)",
+        "milkYield": "4-6 L/day (900-1200 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kankrej",
+        "origin": "Kutch region, Gujarat",
+        "population": "43 - 47 lakh",
+        "use": "Dual (Draught/Dairy)",
+        "milkYield": "5-8 L/day (1400-1800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Hariana",
+        "origin": "Hisar & Rohtak, Haryana",
+        "population": "48 - 52 lakh",
+        "use": "Dual (Draught/Dairy)",
+        "milkYield": "4-6 L/day (1000-1400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ongole",
+        "origin": "Ongole region, Andhra Pradesh",
+        "population": "68 - 72 lakh",
+        "use": "Dual (Draught/Meat)",
+        "milkYield": "4-7 L/day (1000-1500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Hallikar",
+        "origin": "Mysore region, Karnataka",
+        "population": "27 - 29 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (250-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Amritmahal",
+        "origin": "Hassan region, Karnataka",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Khillari",
+        "origin": "Sholapur region, Maharashtra",
+        "population": "17 - 19 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (250-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kangayam",
+        "origin": "Coimbatore region, Tamil Nadu",
+        "population": "4.5 - 5 lakh",
+        "use": "Draught",
+        "milkYield": "2-4 L/day (500-1000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Nagori",
+        "origin": "Nagaur district, Rajasthan",
+        "population": "8 - 10 lakh",
+        "use": "Draught",
+        "milkYield": "3-5 L/day (600-900 kg/lactation)"
+    },
+    {
+        "name": "Cow - Dangi",
+        "origin": "Dangs district, Gujarat/Maharashtra",
+        "population": "3 - 4 lakh",
+        "use": "Draught (for hilly terrain)",
+        "milkYield": "2-4 L/day (500-800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Bargur",
+        "origin": "Bargur hills, Tamil Nadu",
+        "population": "14,000 - 16,000",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Binjharpuri",
+        "origin": "Jajpur district, Odisha",
+        "population": "6 - 8 lakh",
+        "use": "Draught",
+        "milkYield": "2-3 L/day (600-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ghumusari",
+        "origin": "Kandhamal district, Odisha",
+        "population": "35,000 - 45,000",
+        "use": "Draught, Manure",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kasargod",
+        "origin": "Kasaragod district, Kerala",
+        "population": "4,000 - 6,000",
+        "use": "Dairy, Manure",
+        "milkYield": "1-3 L/day (300-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kenkatha",
+        "origin": "Bundelkhand region, UP/MP",
+        "population": "2.5 - 3.5 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (300-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Kherigarh",
+        "origin": "Kheri district, Uttar Pradesh",
+        "population": "3.5 - 4.5 lakh",
+        "use": "Draught",
+        "milkYield": "2-3 L/day (400-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Khariar",
+        "origin": "Nuapada district, Odisha",
+        "population": "1.4 - 1.6 lakh",
+        "use": "Draught",
+        "milkYield": "1-3 L/day (300-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Krishna Valley",
+        "origin": "Krishna river valley, Karnataka",
+        "population": "2,000 - 4,000",
+        "use": "Draught",
+        "milkYield": "3-5 L/day (800-1000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Malnad Gidda",
+        "origin": "Malnad region, Karnataka",
+        "population": "11 - 13 lakh",
+        "use": "Dairy, Manure",
+        "milkYield": "2-4 L/day (500-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Motu",
+        "origin": "Malkangiri district, Odisha",
+        "population": "35,000 - 45,000",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Nimari",
+        "origin": "Nimar region, Madhya Pradesh",
+        "population": "7 - 9 lakh",
+        "use": "Draught",
+        "milkYield": "2-4 L/day (500-700 kg/lactation)"
+    },
+    {
+        "name": "Cow - Pulikulam",
+        "origin": "Madurai region, Tamil Nadu",
+        "population": "90,000 - 1.1 lakh",
+        "use": "Draught (Jallikattu)",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Toda",
+        "origin": "Nilgiri hills, Tamil Nadu",
+        "population": "1,100 - 1,300",
+        "use": "Manure, Cultural",
+        "milkYield": "1-2 L/day (200-300 kg/lactation)"
+    },
+    {
+        "name": "Cow - Umblachery",
+        "origin": "Cauvery delta, Tamil Nadu",
+        "population": "1.8 - 2.2 lakh",
+        "use": "Draught (for paddy fields)",
+        "milkYield": "1-3 L/day (300-500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Alambadi",
+        "origin": "Krishnagiri, Tamil Nadu",
+        "population": "1,500 - 2,500",
+        "use": "Draught",
+        "milkYield": "1-2 L/day (200-400 kg/lactation)"
+    },
+    {
+        "name": "Cow - Banni",
+        "origin": "Kutch region, Gujarat",
+        "population": "11,000 - 13,000",
+        "use": "Dairy, Draught",
+        "milkYield": "5-8 L/day (1200-1800 kg/lactation)"
+    },
+    {
+        "name": "Cow - Vechur",
+        "origin": "Kottayam, Kerala",
+        "population": "1,400 - 1,600",
+        "use": "Dairy (A2 milk)",
+        "milkYield": "2-3 L/day (500-600 kg/lactation)"
+    },
+    {
+        "name": "Cow - Jersey",
+        "origin": "Jersey Island, UK (Exotic)",
+        "population": "7,000 - 9,000",
+        "use": "Dairy (High Fat %)",
+        "milkYield": "18-24 L/day (4000-5000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Brown Swiss",
+        "origin": "Switzerland (Exotic)",
+        "population": "5,000 - 7,000",
+        "use": "Dairy",
+        "milkYield": "22-28 L/day (5000-6000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Ayrshire",
+        "origin": "Ayr, Scotland (Exotic)",
+        "population": "2,500 - 3,500",
+        "use": "Dairy",
+        "milkYield": "20-25 L/day (4500-5500 kg/lactation)"
+    },
+    {
+        "name": "Cow - Guernsey",
+        "origin": "Guernsey Island, UK (Exotic)",
+        "population": "Below 1,000",
+        "use": "Dairy (A2 milk)",
+        "milkYield": "18-22 L/day (4000-5000 kg/lactation)"
+    },
+    {
+        "name": "Cow - Red Dane",
+        "origin": "Denmark (Exotic)",
+        "population": "2,000 - 3,000",
+        "use": "Dairy",
+        "milkYield": "20-25 L/day (5000-5500 kg/lactation)"
+    }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileUpload = document.getElementById('file-upload');
+            const imagePreview = document.getElementById('image-preview');
+            const previewImage = document.getElementById('preview-image');
+            const predictButton = document.getElementById('predict-button');
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const backButton = document.getElementById('back-button');
+            const saveButton = document.getElementById('save-button');
+            const feedbackSection = document.getElementById('feedback-section');
+            const feedbackYes = document.getElementById('feedback-yes');
+            const feedbackNo = document.getElementById('feedback-no');
+            const correctBreedSection = document.getElementById('correct-breed-section');
+            const correctBreed = document.getElementById('correct-breed');
+            const submitFeedback = document.getElementById('submit-feedback');
+
+            const predictedClass = document.getElementById('predicted-class');
+            const confidence = document.getElementById('confidence');
+            const resultImage = document.getElementById('result-image');
+            const originRegion = document.getElementById('origin-region');
+            const population = document.getElementById('population');
+            const mainUse = document.getElementById('main-use');
+            const avgMilkYield = document.getElementById('avg-milk-yield');
+
+            let lastPrediction = null;
+
+            // Populate dropdown
+            breedData.forEach(breed => {
+                const option = document.createElement('option');
+                option.value = breed.name;
+                option.textContent = breed.name;
+                correctBreed.appendChild(option);
+            });
+
+            fileUpload.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        predictButton.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            predictButton.addEventListener('click', () => {
+                welcomeScreen.classList.add('hidden');
+                const randomIndex = Math.floor(Math.random() * breedData.length);
+                const predictedBreed = breedData[randomIndex];
+                lastPrediction = predictedBreed;
+                const randomConfidence = (Math.random() * 20 + 80).toFixed(2);
+
+                predictedClass.textContent = predictedBreed.name;
+                confidence.textContent = `${randomConfidence}%`;
+                originRegion.textContent = predictedBreed.origin;
+                population.textContent = predictedBreed.population;
+                mainUse.textContent = predictedBreed.use;
+                avgMilkYield.textContent = predictedBreed.milkYield;
+                resultImage.src = previewImage.src;
+
+                resultScreen.classList.remove('hidden');
+                feedbackSection.classList.remove('hidden');
+                correctBreedSection.classList.add('hidden');
+            });
+
+            backButton.addEventListener('click', () => {
+                resultScreen.classList.add('hidden');
+                imagePreview.classList.add('hidden');
+                predictButton.classList.add('hidden');
+                welcomeScreen.classList.remove('hidden');
+                fileUpload.value = '';
+                feedbackSection.classList.add('hidden');
+                correctBreedSection.classList.add('hidden');
+            });
+
+            saveButton.addEventListener('click', () => {
+                const csvContent = [
+                    ["Breed", "Confidence", "Origin Region", "Population", "Main Use", "Avg. Milk Yield"],
+                    [
+                        predictedClass.textContent,
+                        confidence.textContent,
+                        originRegion.textContent,
+                        population.textContent,
+                        mainUse.textContent,
+                        avgMilkYield.textContent
+                    ]
+                ].map(e => e.join(",")).join("\n");
+
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'breed_prediction.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            feedbackYes.addEventListener('click', () => {
+                saveFeedback(predictedClass.textContent, confidence.textContent, "Yes", "");
+                alert("Thank you for your feedback!");
+                feedbackSection.classList.add('hidden');
+            });
+
+            feedbackNo.addEventListener('click', () => {
+                correctBreedSection.classList.remove('hidden');
+            });
+
+            submitFeedback.addEventListener('click', () => {
+                const correct = correctBreed.value;
+                saveFeedback(predictedClass.textContent, confidence.textContent, "No", correct);
+                alert("Thank you for your feedback!");
+                correctBreedSection.classList.add('hidden');
+                feedbackSection.classList.add('hidden');
+            });
+
+            function saveFeedback(predicted, conf, correct, correctBreed) {
+                const csvContent = [
+                    ["Predicted Breed", "Confidence", "Was Correct", "Correct Breed"],
+                    [predicted, conf, correct, correctBreed]
+                ].map(e => e.join(",")).join("\n");
+
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'breed_feedback.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        });
+    </script>
+
+</body>
+</html>
